@@ -1,0 +1,14 @@
+/* tools/fetch_fonts.py 로 생성됨 */
+@font-face { font-family: 'Noto Sans KR Local'; font-style: normal; font-weight: 300; font-display: block; src: url('nsk-300.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Sans KR Local'; font-style: normal; font-weight: 500; font-display: block; src: url('nsk-500.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Sans KR Local'; font-style: normal; font-weight: 700; font-display: block; src: url('nsk-700.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Sans KR Local'; font-style: normal; font-weight: 900; font-display: block; src: url('nsk-900.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif KR Local'; font-style: normal; font-weight: 300; font-display: block; src: url('nserif-300.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif KR Local'; font-style: normal; font-weight: 500; font-display: block; src: url('nserif-500.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif KR Local'; font-style: normal; font-weight: 700; font-display: block; src: url('nserif-700.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif KR Local'; font-style: normal; font-weight: 900; font-display: block; src: url('nserif-900.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat Local'; font-style: normal; font-weight: 500; font-display: block; src: url('mont-500.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat Local'; font-style: normal; font-weight: 700; font-display: block; src: url('mont-700.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat Local'; font-style: normal; font-weight: 800; font-display: block; src: url('mont-800.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat Local'; font-style: normal; font-weight: 900; font-display: block; src: url('mont-900.woff2') format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond Local'; font-style: italic; font-weight: 500; font-display: block; src: url('corm-500i.woff2') format('woff2'); }
