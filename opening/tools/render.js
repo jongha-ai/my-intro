@@ -54,7 +54,7 @@ function serve() {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const ffArgs = ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-'];
   if (fs.existsSync(audio) && FROM === 0) ffArgs.push('-i', audio);
-  ffArgs.push('-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-movflags', '+faststart');
+  ffArgs.push('-c:v', 'libx264', '-preset', 'slow', '-crf', '23', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-movflags', '+faststart');
   if (fs.existsSync(audio) && FROM === 0) ffArgs.push('-c:a', 'aac', '-b:a', '256k', '-shortest');
   ffArgs.push(out);
   const ff = spawn('ffmpeg', ffArgs, { stdio: ['pipe', 'inherit', 'inherit'] });
