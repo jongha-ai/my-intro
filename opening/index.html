@@ -112,6 +112,8 @@
   /* ============ SCENE 5 : 반전 ============ */
   .bg-navy { background: radial-gradient(ellipse at 50% 55%, #10307a 0%, #0a1d4a 38%, #050f26 75%, #02071a 100%); }
   #s5burst { left: 0; top: 0; width: 1920px; height: 1080px; background: radial-gradient(circle at 50% 50%, rgba(140,190,255,.9) 0%, rgba(31,91,255,.45) 18%, rgba(31,91,255,0) 50%); mix-blend-mode: screen; }
+  #s5line { left: 0; top: 539px; width: 1920px; height: 2px; transform-origin: 50% 50%;
+    background: linear-gradient(90deg, rgba(127,214,255,0) 0%, #a9e4ff 35%, #ffffff 50%, #a9e4ff 65%, rgba(127,214,255,0) 100%); box-shadow: 0 0 24px 4px rgba(75,132,255,.8); }
   #s5t1 { left: 0; width: 1920px; top: 370px; text-align: center; font-weight: 300; font-size: 72px; letter-spacing: 0.04em; color: #dbe6ff; }
   #s5t1 b { font-weight: 700; color: #fff; }
   #s5line2 { left: 0; width: 1920px; top: 480px; text-align: center; }
@@ -202,21 +204,34 @@
   /* ============ SCENE 8 : 지금의 나 (브랜드) ============ */
   .bg-ice { background: radial-gradient(ellipse at 70% 20%, #ffffff 0%, #eef3fc 45%, #dde7f8 100%); }
   .blob { border-radius: 50%; filter: blur(80px); }
-  #logo { left: 0; width: 1920px; top: 380px; display: flex; align-items: center; justify-content: center; gap: 40px; transform-origin: 960px 100px; }
-  #logoMark { width: 200px; height: 200px; overflow: visible; }
-  #logoWord { font-family: 'Montserrat Local', 'Montserrat'; font-weight: 800; font-size: 150px; letter-spacing: -0.03em; color: var(--ink); line-height: 1; white-space: nowrap; }
-  #logoWord .aiw { color: var(--cobalt); }
+  /* 실제 AIWorks 로고 (assets/aiworks-*.png) : 1397x292 원본 비율 */
+  #logo { left: 550px; top: 400px; width: 819px; height: 171px; transform-origin: 0 0; }
+  #logo img { position: absolute; top: 0; height: 171px; }
+  #logoMark { left: 0; width: 170px; transform-origin: 50% 60%; }
+  #logoWord { left: 170px; width: 649px; }
+  #logoShine { position: absolute; inset: 0; overflow: hidden;
+    -webkit-mask-image: url(assets/aiworks-logo.png); mask-image: url(assets/aiworks-logo.png); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+  #logoShine i { position: absolute; top: -20%; left: 0; width: 220px; height: 140%;
+    background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.85) 50%, rgba(255,255,255,0) 100%); }
+  #logoShadow { left: 560px; top: 560px; width: 800px; height: 40px; border-radius: 50%; background: radial-gradient(ellipse at 50% 50%, rgba(10,39,93,.10), rgba(10,39,93,0) 70%); filter: blur(10px); }
   #s8t1 { left: 0; width: 1920px; top: 600px; text-align: center; font-weight: 700; font-size: 82px; color: var(--ink); letter-spacing: -0.02em; }
-  #s8t1 b { color: var(--cobalt); font-family: 'Montserrat Local', 'Montserrat'; font-weight: 800; }
-  #s8photos { left: 220px; top: 200px; width: 560px; height: 700px; border-radius: 26px; overflow: hidden; box-shadow: 0 40px 100px rgba(10,29,74,.35); background: #0a1d4a; }
-  .ph { position: absolute; inset: 0; overflow: hidden; }
-  .ph .cam { width: 560px; height: 700px; }
-  .ph-tag { position: absolute; left: 28px; bottom: 28px; padding: 10px 22px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--ink); font-weight: 700; font-size: 26px; z-index: 3; }
-  #s8roles { left: 900px; top: 330px; }
+  #s8t1 b { position: relative; display: inline-block; color: #0a275d; font-family: 'Montserrat Local', 'Montserrat'; font-weight: 800; }
+  #s8t1 b i { position: absolute; left: 2%; right: 2%; bottom: -2px; height: 7px; border-radius: 4px; background: #d19b3c; transform-origin: left; }
+  /* 실제 프로필 사진: 화면 왼쪽 전체 높이, 오른쪽으로 배경에 자연스럽게 스며듦 */
+  #s8photos { left: 0; top: 0; width: 900px; height: 1080px; overflow: hidden; background: #d9dee4;
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 58%, rgba(0,0,0,.6) 78%, transparent 100%); mask-image: linear-gradient(90deg, #000 0%, #000 58%, rgba(0,0,0,.6) 78%, transparent 100%); }
+  .ph { position: absolute; inset: 0; overflow: hidden; isolation: isolate; }
+  .ph .cam { width: 900px; height: 1080px; }
+  .ph .cam img { object-position: 50% 22%; }
+  .ph::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 340px; background: linear-gradient(0deg, rgba(6,18,46,.62), rgba(6,18,46,0)); }
+  .ph-tag { position: absolute; left: 96px; bottom: 96px; z-index: 3; display: flex; align-items: center; gap: 18px;
+    color: #fff; font-weight: 500; font-size: 30px; letter-spacing: 0.12em; text-shadow: 0 2px 16px rgba(0,0,0,.35); }
+  .ph-tag::before { content: ''; width: 46px; height: 2px; background: #d19b3c; }
+  #s8roles { left: 960px; top: 330px; }
   .role { font-weight: 900; font-size: 128px; line-height: 1.15; letter-spacing: -0.03em; color: var(--ink); white-space: nowrap; }
   .role.c { color: var(--cobalt); }
   #s8div { width: 640px; height: 3px; margin: 22px 0 26px; background: linear-gradient(90deg, var(--cobalt), rgba(31,91,255,0)); transform-origin: left; }
-  #s8brand { left: 900px; top: 780px; font-family: 'Montserrat Local', 'Montserrat'; font-weight: 700; font-size: 26px; letter-spacing: 0.4em; color: #5d6f99; }
+  #s8brand { left: 960px; top: 780px; font-family: 'Montserrat Local', 'Montserrat'; font-weight: 700; font-size: 26px; letter-spacing: 0.4em; color: #5d6f99; }
 
   /* ============ SCENE 9 : 현재의 정체성 ============ */
   #s9 .bg-navy { background: radial-gradient(ellipse at 50% 50%, #0f2b6e 0%, #081a45 45%, #040c22 100%); }
@@ -328,6 +343,8 @@
   <section class="scene" id="s5">
     <div class="full bg-navy"></div>
     <canvas id="s5fx" class="full" width="1920" height="1080"></canvas>
+    <div class="full" id="s5dim" style="background:#01040d"></div>
+    <div class="abs" id="s5line"></div>
     <div class="abs" id="s5burst"></div>
     <div class="abs" id="s5t1">그리고 <b>60대,</b></div>
     <div class="abs" id="s5line2">
@@ -422,30 +439,23 @@
   </section>
 
   <!-- ===================== SCENE 8 : 지금의 나 (51~59초) ===================== -->
-  <!-- 실제 강의·컨설팅 사진은 assets/photo1.jpg ~ photo3.jpg 로 넣으면 자동으로 교체됩니다. -->
+  <!-- 사진: assets/photo1.jpg ~ photo3.jpg / 로고: assets/aiworks-logo.png (mark + word 로 분리 사용) -->
   <section class="scene" id="s8">
     <div class="full bg-ice"></div>
     <div class="abs blob" id="blob1" style="left:1200px; top:-200px; width:900px; height:700px; background:rgba(75,132,255,.28)"></div>
     <div class="abs blob" id="blob2" style="left:-200px; top:600px; width:800px; height:600px; background:rgba(127,214,255,.30)"></div>
     <div class="abs" id="s8photos">
-      <div class="ph" id="ph1"><div class="cam" id="ph1c"><img src="assets/portrait.jpg" data-alt="assets/photo1.jpg" alt=""></div><span class="ph-tag">AI 컨설팅</span></div>
-      <div class="ph" id="ph2"><div class="cam" id="ph2c"><img src="assets/portrait.jpg" data-alt="assets/photo2.jpg" alt=""></div><span class="ph-tag">50플러스 강의</span></div>
-      <div class="ph" id="ph3"><div class="cam" id="ph3c"><img src="assets/portrait.jpg" data-alt="assets/photo3.jpg" alt=""></div><span class="ph-tag">현장 교육</span></div>
+      <div class="ph" id="ph1"><div class="cam" id="ph1c"><img src="assets/photo1.jpg" alt=""></div><span class="ph-tag">AI 컨설팅</span></div>
+      <div class="ph" id="ph2"><div class="cam" id="ph2c"><img src="assets/photo2.jpg" alt=""></div><span class="ph-tag">50플러스 강의</span></div>
+      <div class="ph" id="ph3"><div class="cam" id="ph3c"><img src="assets/photo3.jpg" alt=""></div><span class="ph-tag">현장 교육</span></div>
     </div>
+    <div class="abs" id="logoShadow"></div>
     <div class="abs" id="logo">
-      <svg id="logoMark" viewBox="0 0 200 200">
-        <defs><linearGradient id="gLogo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4b84ff"/><stop offset="1" stop-color="#0f3bd1"/></linearGradient></defs>
-        <rect id="lmFill" x="8" y="8" width="184" height="184" rx="46" fill="url(#gLogo)"/>
-        <rect id="lmStroke" x="8" y="8" width="184" height="184" rx="46" fill="none" stroke="#1f5bff" stroke-width="5" stroke-dasharray="700" stroke-dashoffset="700"/>
-        <g id="lmIn" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M52 146 L82 58 L112 146 M64 116 L100 116"/>
-          <path d="M140 92 L140 146"/>
-        </g>
-        <circle id="lmDot" cx="140" cy="62" r="11" fill="#7fd6ff"/>
-      </svg>
-      <div id="logoWord"><span class="aiw">AI</span><span id="lwRest">Works</span></div>
+      <img id="logoMark" src="assets/aiworks-mark.png" alt="">
+      <img id="logoWord" src="assets/aiworks-word.png" alt="AIWorks">
+      <div id="logoShine"><i></i></div>
     </div>
-    <div class="abs" id="s8t1">지금은 <b>AIWorks</b>를 운영합니다.</div>
+    <div class="abs" id="s8t1">지금은 <b>AIWorks<i></i></b>를 운영합니다.</div>
     <div class="abs" id="s8roles">
       <div class="mask"><span class="role" id="r1">AI 컨설턴트</span></div>
       <div id="s8div"></div>
@@ -749,7 +759,7 @@ function build() {
   /* ---------- 공통 오버레이 ---------- */
   A('#black', { o: [[0, 1], [0.4, 1], [3.4, 0, 'sine'],
     [19.85, 0], [20.05, 0.85, 'in2'], [20.35, 0, 'out2'],             // 중개사 → 택시 딥
-    [28.15, 0], [28.16, 1, 'lin'], [28.6, 1], [28.61, 0, 'lin'],        // 암전
+    [28.15, 0], [28.16, 1, 'lin'], [28.27, 1], [28.36, 0, 'out2'],     // 짧은 암전 → 바로 다음 장면 예고
     [69.0, 0], [70, 0]] });
   A('#lbTop', { sy: [[0, 1], [28.6, 1], [29.3, 0, 'expo'], [65.0, 0], [66.6, 0.72, 'io']] });
   A('#lbBot', { sy: [[0, 1], [28.6, 1], [29.3, 0, 'expo'], [65.0, 0], [66.6, 0.72, 'io']] });
@@ -831,8 +841,11 @@ function build() {
   fadeOut('#s4t1, #s4t2, #s4sub', 25.7, 0.7, { blur: [[25.7, 0], [26.4, 10, 'in2']] });
 
   /* ---------- SCENE 5 : 반전 ---------- */
-  A('#s5', { o: [[28.6, 0], [28.61, 1, 'lin'], [33.0, 1], [33.25, 0, 'lin']] });
-  A('#s5burst', { o: [[28.6, 1], [30.0, 0.25, 'out']], s: [[28.6, 0.6], [30.0, 1.6, 'out']] });
+  A('#s5', { o: [[28.27, 0], [28.28, 1, 'lin'], [33.0, 1], [33.25, 0, 'lin']] });
+  A('#s5burst', { o: [[28.59, 0], [28.6, 1, 'lin'], [30.0, 0.25, 'out']], s: [[28.6, 0.6], [30.0, 1.6, 'out']] });
+  // 드롭 직전 0.3초: 어둠 속에서 코발트 빛줄기가 가로로 펼쳐지며 비트로 이어짐
+  A('#s5dim', { o: [[28.28, 0.88], [28.6, 0.7], [28.75, 0, 'out']] });
+  A('#s5line', { o: [[28.3, 0], [28.36, 1, 'lin'], [28.62, 1], [28.95, 0, 'out']], sx: [[28.3, 0.02], [28.6, 1, 'in2']], sy: [[28.6, 1], [28.9, 26, 'out']] });
   A('#s5t1', { o: [[28.85, 0], [29.4, 1, 'out2']], y: [[28.85, 30], [29.6, 0, 'out']], blur: [[28.85, 10], [29.4, 0, 'out']], ls: [[28.85, 0.25], [30.2, 0.04, 'out']] });
   A('#s5t1', { s: [[30.0, 1], [33.0, 0.94, 'lin']] });
   A('#s5line2', { s: [[30.0, 1], [32.7, 1.05, 'lin'], [33.25, 1.6, 'in']], blur: [[32.7, 0], [33.25, 14, 'in']] });
@@ -926,28 +939,24 @@ function build() {
   A('#s8', { o: [[51.1, 0], [51.11, 1, 'lin'], [59.6, 1], [59.61, 0, 'lin']] });
   A('#blob1', { x: [[51.1, 0], [59.1, -260, 'lin']], y: [[51.1, 0], [59.1, 80, 'lin']] });
   A('#blob2', { x: [[51.1, 0], [59.1, 300, 'lin']] });
-  A('#lmStroke', { dash: [[51.25, 700], [52.0, 0, 'io']] });
-  A('#lmFill', { o: [[51.8, 0], [52.2, 1, 'out2']] });
-  A('#lmIn', { o: [[51.95, 0], [52.2, 1]], s: [[51.95, 0.6], [52.4, 1, 'back']] });
-  A('#lmDot', { s: [[52.25, 0], [52.55, 1, 'back']] });
-  $('#lmIn').style.transformOrigin = '100px 100px'; $('#lmDot').style.transformBox = 'fill-box'; $('#lmDot').style.transformOrigin = 'center';
-  A('#logoWord', { clipR: [[52.0, 100], [52.8, 0, 'expo']], x: [[52.0, -40], [52.8, 0, 'expo']] });
-  A('#logo', { y: [[53.3, 0], [53.9, -210, 'expo'], [55.4, -210], [55.9, -335, 'expo']], s: [[53.3, 1], [53.9, 0.62, 'expo'], [55.4, 0.62], [55.9, 0.3, 'expo']],
-    x: [[55.4, 0], [55.9, -640, 'expo']], o: [[51.1, 1], [58.8, 1], [59.1, 0]] });
+  // 로고: 심볼이 먼저 떠오르고 → 워드마크가 펼쳐진 뒤 → 빛이 한 번 지나감
+  A('#logoMark', { o: [[51.25, 0], [51.6, 1, 'out2']], s: [[51.25, 0.72], [51.95, 1, 'back']], blur: [[51.25, 12], [51.7, 0, 'out']] });
+  A('#logoWord', { clipR: [[51.7, 100], [52.5, 0, 'expo']], x: [[51.7, -36], [52.5, 0, 'expo']], o: [[51.7, 0], [51.85, 1, 'lin']] });
+  A('#logoShine i', { x: [[52.55, -260], [53.25, 860, 'io']] });
+  A('#logoShadow', { o: [[51.6, 0], [52.4, 1], [53.3, 1], [53.6, 0]], sx: [[51.6, 0.4], [52.5, 1, 'expo']] });
+  // 1) 중앙 크게 → 2) 위로 올라가며 문구 등장 → 3) 역할 소개 위 브랜드 시그니처로 정착
+  A('#logo', { x: [[53.3, 0], [53.9, 140, 'expo'], [55.4, 140], [55.95, 410, 'expo']], y: [[53.3, 0], [53.9, -170, 'expo'], [55.4, -170], [55.95, -192, 'expo']],
+    s: [[53.3, 1], [53.9, 0.66, 'expo'], [55.4, 0.66], [55.95, 0.36, 'expo']], o: [[51.1, 1], [58.8, 1], [59.1, 0]] });
   A('#s8t1', { o: [[53.6, 0], [54.0, 1, 'out2'], [55.3, 1], [55.6, 0, 'in2']], y: [[53.6, 40], [54.2, 0, 'expo'], [55.3, 0], [55.6, -30, 'in2']] });
-  A('#s8photos', { o: [[55.6, 0], [55.8, 1, 'out2']], x: [[55.6, -120], [56.2, 0, 'expo']], s: [[55.6, 0.92], [56.2, 1, 'expo'], [59.1, 1.03, 'lin']] });
-  // 사진 교차 (박자에 맞춰 컷)
-  const cuts = [55.6, 56.1, 56.6, 57.1, 57.6, 58.1, 58.6];
-  const camPresets = [{ cx: 0.35, cy: 0.27, z: 1.9 }, { cx: 0.42, cy: 0.40, z: 1.3 }, { cx: 0.5, cy: 0.5, z: 1.0 }];
+  A('#s8t1 b i', { sx: [[54.0, 0], [54.6, 1, 'expo']] });
+  // 사진: 왼쪽에서 열리고, 박자(1초)마다 부드럽게 크로스페이드 + 천천히 푸시인
+  A('#s8photos', { clipR: [[55.45, 100], [56.15, 0, 'expo']], o: [[55.45, 0], [55.6, 1, 'lin']] });
+  const photoT = [55.6, 56.6, 57.6, 59.3];
   ['#ph1', '#ph2', '#ph3'].forEach((sel, i) => {
-    const keys = [[0, 0]];
-    for (let k = 0; k < cuts.length - 1; k++) {
-      const on = (k % 3) === i ? 1 : 0;
-      keys.push([cuts[k] - 0.001, keys[keys.length - 1][1]], [cuts[k], on, 'lin']);
-    }
-    A(sel, { o: keys });
-    const p = camPresets[i];
-    A(sel + 'c', { cx: [[55.6, p.cx], [59.1, p.cx + 0.03, 'lin']], cy: [[55.6, p.cy], [59.1, p.cy - 0.02, 'lin']], z: [[55.6, p.z * 1.08], [59.1, p.z, 'lin']] });
+    const a0 = photoT[i], a1 = photoT[i + 1];
+    if (i > 0) A(sel, { o: [[a0 - 0.15, 0], [a0 + 0.2, 1, 'sine']] });
+    A(sel + 'c', { cx: [[a0 - 0.2, 0.5], [a1, 0.5]], cy: [[a0 - 0.2, 0.36], [a1, 0.33, 'lin']], z: [[a0 - 0.2, 1.0], [a1, 1.07, 'lin']] });
+    A(sel + ' .ph-tag', { o: [[a0 + 0.15, 0], [a0 + 0.5, 1, 'out2']], x: [[a0 + 0.15, -24], [a0 + 0.6, 0, 'expo']] });
   });
   A('#r1', { yp: [[55.9, 110], [56.5, 0, 'expo']] });
   A('#s8div', { sx: [[56.3, 0], [57.0, 1, 'expo']] });
@@ -1113,9 +1122,6 @@ function loadOptional() {
   const jobs = [];
   $$('img.capture[data-src]').forEach(img => jobs.push(new Promise(res => {
     const probe = new Image(); probe.onload = () => { img.src = img.dataset.src; img.style.display = 'block'; res(); }; probe.onerror = res; probe.src = img.dataset.src;
-  })));
-  $$('img[data-alt]').forEach(img => jobs.push(new Promise(res => {
-    const probe = new Image(); probe.onload = () => { img.src = img.dataset.alt; res(); }; probe.onerror = res; probe.src = img.dataset.alt;
   })));
   return Promise.all(jobs);
 }

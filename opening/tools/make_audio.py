@@ -253,6 +253,15 @@ def chord_at(t):
     return prog[idx]
 
 
+# 드롭 직전 0.32초 빨아들이는 스웰 (화면의 빛줄기와 함께 → 공백 없이 비트로 연결)
+sd = 28.6 - 28.28
+t = tt(sd)
+u = t / sd
+swell = onepole_lp(noise(sd), 0.03 + 0.5 * u ** 2) * u ** 2.2 * 0.9
+swell += np.sin(2 * np.pi * np.cumsum(38 + 70 * u ** 2) / SR) * u ** 1.5 * 0.6
+swell += np.sin(2 * np.pi * np.cumsum(600 + 2400 * u ** 2) / SR) * u ** 3 * 0.08
+add(dry, 28.28, swell, gain=0.55)
+
 # 임팩트
 add(dry, 28.6, boom(1.0, 3.0, 58, 28))
 add(wet, 28.6, crash(0.22, 2.5))
@@ -319,8 +328,8 @@ add(dry, 51.1, boom(0.9, 2.6, 60, 30))
 add(wet, 51.1, crash(0.22, 2.6))
 for m in (72, 76, 79, 84):
     add(wet, 51.1, pluck(mtof(m), dur=2.5, decay=1.4), gain=0.1)
-for ts in (55.6, 56.1, 56.6, 57.1, 57.6, 58.1):      # 사진 컷 셔터감
-    add(dry, ts, hat(0.12, 40), pan=rng.uniform(-0.4, 0.4))
+for ts in (55.6, 56.6, 57.6):                        # 사진 전환 셔터감
+    add(dry, ts, hat(0.1, 40), pan=rng.uniform(-0.4, 0.4))
 
 # 정체성: 라이저 → 히트 → 스네어 롤 → 클라이맥스
 rd = 1.0
@@ -373,9 +382,12 @@ def reverb(x, secs=2.4):
 
 
 rv = reverb(wet)
+# 암전~드롭 사이엔 이전 장면 잔향이 남지 않도록 (스웰만 들리게)
+rv[:, int(CUT * SR) + 600: int(28.6 * SR)] = 0
+wet[:, int(CUT * SR) + 600: int(28.6 * SR)] = 0
 mix = dry + wet * 0.75 + rv * 0.45
 # 암전 구간은 리버브 꼬리까지 완전 무음
-mix[:, int(CUT * SR) + 600: int(28.6 * SR)] = 0
+mix[:, int(CUT * SR) + 600: int(28.28 * SR)] = 0
 # 마지막 페이드아웃
 fo = int(0.9 * SR)
 mix[:, N - fo:] *= np.linspace(1, 0, fo) ** 1.5

@@ -40,7 +40,8 @@
 | `capture2.png` | 성과 ② 유튜브 조회수 화면 |
 | `capture3.png` | 성과 ③ 첫 수익 화면 |
 | `capture4.png` | 성과 ④ AI 로고송 채택 화면 |
-| `photo1.jpg` ~ `photo3.jpg` | "지금의 나" 장면의 강의·컨설팅 사진 (세로 사진 권장) |
+| `photo1.jpg` ~ `photo3.jpg` | "지금의 나" 장면의 프로필 사진 (현재 실제 사진 적용됨 — 같은 이름으로 덮어쓰면 교체) |
+| `aiworks-logo.png` 외 2개 | AIWorks 로고 (현재 실제 로고 적용됨, 아래 참고) |
 
 캡처는 가로 3:2 비율(예: 1200×800)이 가장 잘 맞습니다. 이미지를 넣은 뒤에는 아래 방법으로 MP4를 다시 만드세요.
 
@@ -59,4 +60,7 @@ NODE_PATH=$(npm root -g) node tools/render.js --stills 10,45  # 특정 시점 �
 배경음악은 `tools/make_audio.py`로 직접 합성한 음원이라 저작권 걱정 없이 사용할 수 있습니다.
 다른 음악을 쓰려면 `assets/soundtrack.mp3`를 교체하세요(28.6초에 비트가 바뀌도록 편집하면 화면 전환과 맞습니다).
 
-> 참고: 프로필 사진은 `banner.png`에서 잘라 사용했습니다. 패션·부동산·택시 장면 이미지는 함께 주신 이미지입니다.
+> 참고
+> - AIWorks 로고: 받은 로고의 흰 배경을 투명하게 처리해 `aiworks-logo.png`(전체), `aiworks-mark.png`(심볼), `aiworks-word.png`(글자)로 나눠 씁니다. 심볼이 먼저 나오고 글자가 펼쳐지는 연출에 사용합니다.
+> - 프로필 사진: `photo1.jpg`(팔짱), `photo2.jpg`(손짓), `photo3.jpg`(손 모음) 순서로 나옵니다.
+> - 패션·부동산·택시 장면 이미지는 함께 주신 이미지입니다.
