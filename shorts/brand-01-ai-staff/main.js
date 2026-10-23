@@ -9,7 +9,7 @@
   // 폰트 폭이 확정된 뒤에 타임라인을 만들어야 모든 프레임에서 위치가 같습니다.
   await Promise.all(['400', '500', '600', '700', '800', '900'].map(w => document.fonts.load(`${w} 40px Pretendard`, '한글 AI 09:00 출근')));
   await document.fonts.ready;
-  const S = script.scenes, D = script.duration, BEAT = 60 / script.bpm;
+  const S = script.scenes, D = script.duration, BEAT = 60 / script.bpm, E1 = script.scenes.chaos[1];
   const $ = s => document.querySelector(s);
   const $$ = s => [...document.querySelectorAll(s)];
 
@@ -44,6 +44,14 @@
   const cam = $('#cam');
   const line = id => (narr || script.lines).find(l => l.id === id);
   const at = (id, f) => { const l = line(id); const end = l.end || l.start + 4; return l.start + (end - l.start) * f; };
+  // 문장 안 덩어리(쉼으로 나뉜 구간)의 실제 시작·끝. 가이드 음성처럼 덩어리 정보가 없으면 문장 길이를 균등 분할합니다.
+  const NCH = { L1: 1, L2: 2, L3: 3, L4: 2, L5: 2, L6: 2, L7: 3 };
+  const chk = (id, k) => {
+    const l = line(id);
+    if (l.chunks && l.chunks[k]) return l.chunks[k];
+    const n = NCH[id], end = l.end || l.start + 4, w = (end - l.start) / n;
+    return { start: l.start + w * k, end: l.start + w * (k + 1) };
+  };
 
   // 카메라 펀치 / 흔들림
   const punch = (t, a = 0.03, d = 0.42) => tl.fromTo(cam, { scale: 1 + a }, { scale: 1, duration: d, ease: 'power3.out', immediateRender: false }, t);
@@ -70,7 +78,7 @@
   }
 
   // ═════════════════════════════════════════════
-  // S1  0.0–6.0  밀린 업무가 쏟아진다 (훅)
+  // S1  밀린 업무가 쏟아진다 (훅)
   // ═════════════════════════════════════════════
   const chips = [
     ['chat', '카톡 문의 12건', '견적 가능한가요?', '#f2c230', '12'],
@@ -111,51 +119,52 @@
     if (i > 4) fx('ping', ct + .26, .5);
     ct += gaps[Math.min(i, gaps.length - 1)];
   });
-  tl.fromTo('#s1 .redglow', { opacity: 0 }, { opacity: 1, duration: 4.0, ease: 'power2.in', immediateRender: false }, .5);
-  tl.fromTo('#cnt-num', { scale: 1 }, { scale: 1.06, duration: .5, repeat: 9, yoyo: true, ease: 'sine.inOut', immediateRender: false, transformOrigin: '100% 50%' }, .8);
+  tl.fromTo('#s1 .redglow', { opacity: 0 }, { opacity: 1, duration: E1 - 1.0, ease: 'power2.in', immediateRender: false }, .5);
+  tl.fromTo('#cnt-num', { scale: 1 }, { scale: 1.06, duration: .5, repeat: 7, yoyo: true, ease: 'sine.inOut', immediateRender: false, transformOrigin: '100% 50%' }, .8);
   // 알림 배지
   [[120, 520, '99+'], [900, 780, '17'], [160, 1080, '24'], [860, 1170, '8'], [90, 760, '5'], [930, 470, '31'],
    [880, 960, '12'], [100, 940, '9'], [820, 560, '3'], [190, 1250, '14']].forEach((b, i) => {
     const p = document.createElement('div'); p.className = 'ping'; p.textContent = b[2]; p.style.left = b[0] + 'px'; p.style.top = b[1] + 'px'; $('#s1').appendChild(p);
-    const t = 2.0 + i * .3;
+    const t = 1.5 + i * .27;
     tl.fromTo(p, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: .3, ease: 'back.out(2.2)' }, t);
     fx('ping', t + .05, .6);
-    tl.to(p, { scale: 0, opacity: 0, duration: .2, ease: 'power2.in' }, 5.5);
+    tl.to(p, { scale: 0, opacity: 0, duration: .2, ease: 'power2.in' }, E1 - .54);
   });
-  fx('riser', 2.9, 1, { dur: 3.1 });
-  tl.to('.chip', { x: '+=6', duration: .05, repeat: 25, yoyo: true, ease: 'none', stagger: .006 }, 3.55);
+  fx('riser', E1 - 3.0, 1, { dur: 3.0 });
+  tl.to('.chip', { x: '+=6', duration: .05, repeat: 17, yoyo: true, ease: 'none', stagger: .006 }, 3.2);
   // 후반부 경보 펄스 (박자에 맞춰 붉게 번쩍)
-  [3.5, 4.0, 4.5, 5.0].forEach((t, i) => { flash(t, .26, .36, '#ff2d2d'); punch(t, .03 + i * .006, .32); fx('tick', t, .8); });
+  [3.0, 3.5, 4.0].forEach((t, i) => { flash(t, .26, .36, '#ff2d2d'); punch(t, .03 + i * .008, .32); fx('tick', t, .8); });
   // 정점: 모두 무너지며 암전
-  tl.to('.chip', { y: '+=520', rotation: '+=14', opacity: 0, duration: .34, ease: 'power2.in', stagger: .018 }, 5.46);
-  tl.to('#s1-top', { opacity: 0, duration: .2 }, 5.6);
-  shake(5.4, 22, .5);
-  fx('fall', 5.46, 1);
+  tl.to('.chip', { y: '+=520', rotation: '+=14', opacity: 0, duration: .34, ease: 'power2.in', stagger: .018 }, E1 - .54);
+  tl.to('#s1-top', { opacity: 0, duration: .2 }, E1 - .4);
+  shake(E1 - .6, 22, .5);
+  fx('fall', E1 - .54, 1);
   // 전환 → S2
-  flash(5.78, .9, .3);
+  flash(E1 - .22, .9, .3);
   swipe(S.checkin[0], '#315bff', 1);
   fx('impact', S.checkin[0] - .02, 1);
 
   // ═════════════════════════════════════════════
-  // S2  6.0–10.0  AI 직원 출근
+  // S2  AI 직원 출근
   // ═════════════════════════════════════════════
   const s2 = S.checkin[0];
   tl.fromTo('#bigclock', { scale: 1.25, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'power3.out', immediateRender: true }, s2 + .1);
-  tl.set('#clk', { textContent: '09:00' }, s2 + .6);
-  tl.fromTo('#bigclock', { scale: 1.07 }, { scale: 1, duration: .3, immediateRender: false }, s2 + .6);
-  flash(s2 + .6, .5, .3);
-  fx('ding', s2 + .6, 1);
+  const tL2 = line('L2').start, tH = chk('L2', 1).start;      // "그런데 오늘," 시작 / "AI 직원이" 시작
+  tl.set('#clk', { textContent: '09:00' }, tL2);
+  tl.fromTo('#bigclock', { scale: 1.07 }, { scale: 1, duration: .3, immediateRender: false }, tL2);
+  flash(tL2, .5, .3);
+  fx('ding', tL2, 1);
   fx('tick', s2 + .1, .6); fx('tick', s2 + .35, .6);
-  tl.to('#bigclock', { scale: 1.7, opacity: 0, duration: .3, ease: 'power3.in' }, s2 + 1.55);
-  tl.fromTo('#s2-pill', { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: .45 }, s2 + 1.5);
-  // 헤드라인 슬램
-  tl.fromTo('#s2-h1 span', { yPercent: 110 }, { yPercent: 0, duration: .5, ease: 'expo.out' }, s2 + 1.5);
-  fx('hit', s2 + 1.5, .9); punch(s2 + 1.5, .035);
-  tl.fromTo('#s2-h2 span', { yPercent: 110 }, { yPercent: 0, duration: .5, ease: 'expo.out' }, s2 + 3.0);
-  fx('hit', s2 + 3.0, 1); punch(s2 + 3.0, .05); shake(s2 + 3.0, 12, .4);
+  tl.to('#bigclock', { scale: 1.7, opacity: 0, duration: .3, ease: 'power3.in' }, tH - .05);
+  tl.fromTo('#s2-pill', { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: .45 }, tH);
+  // 헤드라인 슬램: "AI 직원이" → "출근했습니다"
+  tl.fromTo('#s2-h1 span', { yPercent: 110 }, { yPercent: 0, duration: .5, ease: 'expo.out' }, tH);
+  fx('hit', tH, .9); punch(tH, .035);
+  tl.fromTo('#s2-h2 span', { yPercent: 110 }, { yPercent: 0, duration: .5, ease: 'expo.out' }, tH + .85);
+  fx('hit', tH + .85, 1); punch(tH + .85, .05); shake(tH + .85, 12, .4);
   // 출근 행
   $$('#rows .row').forEach((r, i) => {
-    const t = s2 + 2.0 + i * .5;
+    const t = tH + .5 + i * .5;
     tl.fromTo(r, { x: 140, opacity: 0, scale: .94 }, { x: 0, opacity: 1, scale: 1, duration: .45, ease: 'back.out(1.6)' }, t);
     fx('pop', t + .05, .8);
     const st = r.querySelector('.st');
@@ -168,7 +177,7 @@
   fx('whoosh', S.team[0] - .32, .9);
 
   // ═════════════════════════════════════════════
-  // S3  10.0–20.0  역할을 나눠 일하는 AI 조직
+  // S3  역할을 나눠 일하는 AI 조직
   // ═════════════════════════════════════════════
   const s3 = S.team[0];
   tl.fromTo('#s3', { scale: .78, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, ease: 'power3.out', immediateRender: true }, s3 - .05);
@@ -193,8 +202,8 @@
     tl.fromTo(`${node} .ck`, { scale: 0 }, { scale: 1, duration: .35, ease: 'back.out(3)', immediateRender: false }, t);
     fx('success', t, 1);
   };
-  // 11.0 "매니저가 나누고"
-  const tM = at('L3', 0), tR = at('L3', .31), tC = at('L3', .65);
+  // "매니저가 나누고" / "리서처가 조사하고" / "콘텐츠가 만듭니다"
+  const tM = chk('L3', 0).start, tR = chk('L3', 1).start, tC = chk('L3', 2).start;
   ring('#n-mgr', tM, 1.5); setText('#n-mgr', '업무 47건 배분 중…', tM);
   for (let k = 0; k < 3; k++) {
     const pr = document.createElement('div'); pr.className = 'pr'; $('#s3').insertBefore(pr, $('#n-mgr'));
@@ -215,18 +224,17 @@
     fx('tick', t0 + .6, .5);
   });
   done('#n-mgr', '배분 완료', tM + 1.55);
-  // 12.7 "리서처가 조사하고"
   ring('#n-res', tR, 1.7); setText('#n-res', '자료 조사 중…', tR); punch(tR, .025); fx('hit', tR, .5);
   tl.fromTo('#n-res .bar', { width: 0 }, { width: '100%', duration: 1.5, ease: 'power1.inOut', immediateRender: false }, tR);
   done('#n-res', '카드를 완료했습니다', tR + 1.55);
-  // 14.55 "콘텐츠가 만듭니다"
   ring('#n-con', tC, 1.8); setText('#n-con', '원고 작성 중…', tC); punch(tC, .025); fx('hit', tC, .5);
   tl.fromTo('#n-con .bar', { width: 0 }, { width: '100%', duration: 1.7, ease: 'power1.inOut', immediateRender: false }, tC);
   done('#n-con', '초안 완료', tC + 1.75);
   // 역할 칩
-  tl.fromTo('#roles', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }, 16.2);
+  const tRole = line('L3').end;
+  tl.fromTo('#roles', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }, tRole);
   $$('#roles .rr div').forEach((d, i) => {
-    const t = 16.6 + i * .5;
+    const t = tRole + .25 + i * .45;
     tl.to(d, { backgroundColor: '#315bff', color: '#fff', borderColor: '#6d8bff', duration: .18 }, t);
     tl.set(d.querySelector('svg'), { display: 'block' }, t);
     tl.fromTo(d, { scale: 1.12 }, { scale: 1, duration: .3, ease: 'back.out(2)', immediateRender: false }, t);
@@ -237,7 +245,7 @@
   tl.to('#s3', { y: -160, opacity: 0, duration: .24, ease: 'power2.in' }, S.team[1] - .26);
 
   // ═════════════════════════════════════════════
-  // S4  20.0–30.0  글 하나가 카드뉴스·SNS·영상이 된다
+  // S4  글 하나가 카드뉴스·SNS·영상이 된다
   // ═════════════════════════════════════════════
   const s4 = S.content[0];
   tl.fromTo('#s4-head', { opacity: 0 }, { opacity: 1, duration: .4 }, s4 + .3);
@@ -249,7 +257,8 @@
     tl.fromTo(sel, { x: from[0], y: from[1], scale: .2, rotation: from[2], opacity: 0 }, { x: 0, y: 0, scale: 1, rotation: 0, opacity: 1, duration: .62, ease: 'back.out(1.5)', immediateRender: true, ...extra }, t);
     fx('pop', t + .1, 1); fx('whoosh', t - .03, .5); punch(t + .1, .02);
   };
-  const T4 = [at('L4', .25), at('L4', .5), at('L4', .74), at('L4', .8) + .5];
+  const c7 = chk('L4', 0), c8 = chk('L4', 1);              // "글 하나가 카드뉴스, SNS," / "영상이 됩니다"
+  const T4 = [c7.start + .8, c7.start + 1.7, c8.start, c8.start + .8];
   tl.to('#doc', { scale: .5, y: 40, rotation: 0, duration: .5, ease: 'power3.inOut' }, T4[0] - .15);
   tl.to('#doc', { opacity: 0, duration: .25 }, T4[0] + .1);
   burst('#o-ig', T4[0], [300, 380, -25]);
@@ -259,17 +268,18 @@
   // 떠다니는 느낌
   ['#o-ig', '#o-th', '#o-mg'].forEach((s, i) => tl.to(s, { y: (i % 2 ? 14 : -14), duration: 2.2, ease: 'sine.inOut', yoyo: true, repeat: 2 }, T4[i] + .7));
   // 이 영상도 AI와 함께 — 유튜브 카드가 화면 중앙으로 확대
-  const tV = line('L5').start;
+  const tV = chk('L5', 0).start, tSticker = chk('L5', 1).start;   // "이 영상도," / "AI와 함께 만들었습니다"
   tl.to(['#o-ig', '#o-th', '#o-mg'], { opacity: .16, scale: .92, filter: 'blur(6px)', duration: .45, ease: 'power2.out' }, tV);
   tl.to('#o-yt', { x: -(640 + 125 - 540), y: -(860 + 222 - 790), scale: 1.78, duration: .6, ease: 'power3.inOut' }, tV);
   fx('whoosh', tV, .8);
-  tl.fromTo('#madewith', { y: 40, opacity: 0, scale: .8 }, { y: 0, opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)', immediateRender: true }, tV + .85);
-  fx('hit', tV + .85, .8); shake(tV + .85, 12, .4);
+  tl.fromTo('#madewith', { y: 40, opacity: 0, scale: .8 }, { y: 0, opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)', immediateRender: true }, tSticker);
+  fx('hit', tSticker, .8); shake(tSticker, 12, .4);
   // 재생 시간 올라가기 (영상 속 영상)
   const ytp = { v: 0 };
-  tl.to(ytp, { v: 1, duration: 3.4, ease: 'none', onUpdate() {
-    $('#yt-prog').style.width = (ytp.v * 100) + '%';
-    const sec = Math.round(26 + ytp.v * 4); $('#yt-tm').textContent = `0:${sec}`;
+  tl.to(ytp, { v: 1, duration: S.approve[0] - tV, ease: 'none', onUpdate() {        // 실제 재생 위치를 그대로 표시
+    const now = tV + ytp.v * (S.approve[0] - tV);
+    $('#yt-prog').style.width = (now / D * 100) + '%';
+    $('#yt-tm').textContent = `0:${String(Math.round(now)).padStart(2, '0')}`;
   } }, tV);
   // 전환 → S5 (아이리스)
   const tI = S.approve[0];
@@ -279,7 +289,7 @@
   fx('swoosh', tI - .05, 1);
 
   // ═════════════════════════════════════════════
-  // S5  30.0–37.0  사장님은 확인하고 승인만
+  // S5  사장님은 확인하고 승인만
   // ═════════════════════════════════════════════
   const s5 = S.approve[0];
   tl.set('#vig', { opacity: 0 }, s5 - .02); tl.to('#vig', { opacity: 1, duration: .4, ease: 'power1.in' }, S.brand[0] - .1);
@@ -293,7 +303,7 @@
   tl.fromTo('#apbtn', { y: 50, opacity: 0, scale: .92 }, { y: 0, opacity: 1, scale: 1, duration: .5, ease: 'back.out(1.8)', immediateRender: true }, s5 + 1.5);
   fx('pop', s5 + 1.55, .8);
   // 탭 동작
-  const tTap = 33.0;
+  const tTap = chk('L6', 1).start + .1;                    // "승인만 하세요"
   tl.fromTo('#tapring', { left: 800, top: 1420, opacity: 0, scale: 1 }, { left: 560, top: 1150, opacity: 1, duration: .55, ease: 'power3.inOut', immediateRender: true }, tTap - .75);
   tl.to('#tapring', { scale: .72, duration: .12, ease: 'power2.in' }, tTap - .12);
   tl.to('#apbtn', { scale: .96, duration: .12, ease: 'power2.in' }, tTap - .12);
@@ -317,7 +327,7 @@
   tl.fromTo('#cnt5', { scale: 1.2 }, { scale: 1, duration: .5, ease: 'back.out(3)', transformOrigin: '100% 50%', immediateRender: false }, tTap + 1.6);
   fx('ding', tTap + 1.7, 1);
   // 큰 문구로 교체
-  const tB = 35.0;
+  const tB = tTap + 1.9;
   tl.to(['#s5 .apr', '#apbtn'], { y: -70, opacity: 0, duration: .3, ease: 'power2.in', stagger: .05 }, tB - .1);
   tl.to('#s5-head', { opacity: 0, y: -30, duration: .25 }, tB - .1);
   tl.fromTo('#s5-big .w:nth-child(1) span', { yPercent: 115 }, { yPercent: 0, duration: .55, ease: 'expo.out', immediateRender: true }, tB + .2);
@@ -333,7 +343,7 @@
   fx('swoosh', t6 - .32, 1);
 
   // ═════════════════════════════════════════════
-  // S6  37.0–45.0  브랜드 락업
+  // S6  브랜드 락업
   // ═════════════════════════════════════════════
   tl.fromTo('#s6 .glow.a', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: 1.2, ease: 'power2.out', immediateRender: true }, t6 + .1);
   tl.fromTo('#s6-logo .lw', { clipPath: 'inset(0 100% 0 0)', scale: .9 }, { clipPath: 'inset(0 0% 0 0)', scale: 1, duration: .55, ease: 'expo.out', immediateRender: true }, t6 + .3);
@@ -341,42 +351,57 @@
   fx('impact', t6 + .3, 1); punch(t6 + .35, .04); shake(t6 + .35, 10, .4);
   tl.fromTo('#s6-lab', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5 }, t6 + .85);
   // 태그라인 (나레이션과 동기)
-  const tA = at('L7', 0.02), tBb = at('L7', .57);
+  const tA = chk('L7', 0).start, tBb = chk('L7', 1).start, tLab = chk('L7', 2).start;
   tl.fromTo('#s6-tag .a', { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: .5, immediateRender: true }, tA + .3);
   tl.fromTo('#s6-tag .b', { opacity: 0, y: 60, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.6)', immediateRender: true }, tBb);
   fx('hit', tBb, 1); punch(tBb, .04); shake(tBb, 12, .4);
   // 태그라인이 물러나고 → 제목 두 줄 → CTA
-  const tOut = 42.0;
+  const tOut = chk('L7', 1).end + .3;
   tl.to('#s6-tag', { opacity: 0, y: -50, duration: .28, ease: 'power2.in' }, tOut);
   tl.fromTo('#s6-title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, immediateRender: true }, tOut + .3);
-  tl.fromTo('#s6-title .t2', { opacity: 0, y: 70, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'back.out(1.7)', immediateRender: true }, 42.5);
-  fx('pop', tOut + .3, .7); fx('hit', 42.5, 1); punch(42.5, .035);
-  const tCta = 43.5;
+  const tT2 = tOut + .8;
+  tl.fromTo('#s6-title .t2', { opacity: 0, y: 70, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'back.out(1.7)', immediateRender: true }, tT2);
+  fx('pop', tOut + .3, .7); fx('hit', tT2, 1); punch(tT2, .035);
+  // "아이웍스랩." — LAB 글자가 한 번 반짝
+  tl.fromTo('#s6-lab', { scale: 1 }, { scale: 1.35, color: '#ffffff', duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false }, tLab);
+  fx('pop', tLab, .8);
+  const tCta = S.checkin[0] + 2 * Math.ceil((tT2 + 1.0 - S.checkin[0]) / 2);   // 마지막 코드가 마디 첫 박에 오도록
   tl.fromTo('#s6-cta div', { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .55, ease: 'back.out(2.4)', immediateRender: true }, tCta);
   tl.fromTo('#s6-cta div', { boxShadow: '0 0 0 0 rgba(49,91,255,.65), 0 24px 70px rgba(49,91,255,.55)' }, { boxShadow: '0 0 0 46px rgba(49,91,255,0), 0 24px 70px rgba(49,91,255,.55)', duration: .9, repeat: 1, ease: 'power2.out', immediateRender: false }, tCta + .5);
   fx('pop', tCta + .05, 1); fx('shimmer', tCta, 1);
-  fx('final', 43.5, 1);
+  fx('final', tCta, 1);
 
   // ───────── 자막 ─────────
+  // 음성 덩어리(쉼으로 나뉜 구간)마다 자막 한 장. 덩어리 정보가 없는 가이드 음성은 쉼표 기준으로 문장 길이를 나눕니다.
   const capEl = $('#cap');
+  const addCap = (html, t0, t1) => {
+    const d = document.createElement('div'); d.className = 'line';
+    d.innerHTML = html;
+    capEl.appendChild(d);
+    gsap.set(d, { xPercent: -50 });
+    const w = d.scrollWidth;                                       // 길면 글자 크기를 줄여 화면 안에 넣습니다
+    if (w > 980) d.style.fontSize = (58 * 980 / w) + 'px';
+    tl.fromTo(d, { opacity: 0, y: 26, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .22, ease: 'back.out(1.8)', immediateRender: true }, t0);
+    tl.to(d, { opacity: 0, y: -10, duration: .16, ease: 'power1.in' }, t1);
+  };
+  const emph = t => t.replace(/\[\[(.*?)\]\]/g, '<em>$1</em>').replace(/,$/, '');
   (narr || script.lines).forEach(l => {
-    if (l.id === 'L7') return;                       // 마지막 문장은 화면 문구가 대신함
-    const raw = l.text;
-    let chunks = raw.split(/(?<=,)\s*/).filter(Boolean);
+    if (l.id === 'L7') return;                                     // 마지막 문장은 화면 문구가 대신함
+    if (l.chunks) {
+      l.chunks.forEach((c, k) => {
+        const next = l.chunks[k + 1];
+        addCap(emph(c.text), c.start - .04, next ? next.start - .02 : c.end + .4);
+      });
+      return;
+    }
+    let chunks = l.text.split(/(?<=,)\s*/).filter(Boolean);
     chunks = chunks.reduce((acc, c) => { if (acc.length && acc[acc.length - 1].replace(/\[\[|\]\]|,/g, '').length < 5) acc[acc.length - 1] += ' ' + c; else acc.push(c); return acc; }, []);
     const start = l.start, end = l.end || start + 3.5;
     const total = chunks.reduce((a, c) => a + c.replace(/\[\[|\]\]/g, '').length, 0);
     let t = start;
     chunks.forEach((c, i) => {
-      const len = c.replace(/\[\[|\]\]/g, '').length;
-      const dur = (end - start) * len / total;
-      const d = document.createElement('div'); d.className = 'line';
-      d.innerHTML = c.replace(/\[\[(.*?)\]\]/g, '<em>$1</em>').replace(/,$/, '');
-      capEl.appendChild(d);
-      gsap.set(d, { xPercent: -50 });
-      const last = i === chunks.length - 1;
-      tl.fromTo(d, { opacity: 0, y: 26, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .22, ease: 'back.out(1.8)', immediateRender: true }, t);
-      tl.to(d, { opacity: 0, y: -10, duration: .16, ease: 'power1.in' }, t + dur + (last ? .5 : -.02));
+      const dur = (end - start) * c.replace(/\[\[|\]\]/g, '').length / total;
+      addCap(emph(c), t, t + dur + (i === chunks.length - 1 ? .5 : -.02));
       t += dur;
     });
   });

@@ -6,13 +6,12 @@
 입력  script.json, audio/sfx_cues.json (render.js 가 화면 타임라인에서 기록), audio/narration.wav, audio/narration_cues.json
 출력  audio/stem_music.wav, audio/stem_sfx.wav, audio/mix.wav
 
-구성 (120 BPM, A minor → C major 해결, 45초)
-   0 ~  6s  긴장: 저음 드론 + 점점 빨라지는 시계 틱 + 라이저
-   6 s      드롭: 임팩트, 킥/베이스/클랩 진입 (AI 직원 출근)
-   6 ~ 30s  4마디 코드 순환(Am-F-C-G) 아르페지오 그루브, 20초부터 리드 추가
-  30 ~ 35s  가벼운 구간(승인): 킥만 약하게, 아르페지오는 로우패스
-  35 ~ 37s  라이저로 재상승
-  37 ~ 45s  브랜드 락업: 풀 그루브 → 43.5초 마지막 코드(C add9)와 잔향
+구성 (120 BPM, A minor → C major 해결). 모든 시각은 script.json 의 장면 구간과 효과음 큐에서 가져옵니다.
+  장면1(chaos)    긴장: 저음 드론 + 점점 빨라지는 시계 틱 + 라이저, 드롭 직전 0.2초 무음
+  장면2(checkin)  드롭: 임팩트, 킥/베이스/클랩 진입 (AI 직원 출근)
+  이후            4마디 코드 순환(Am-F-C-G) 아르페지오 그루브, 장면4(content)부터 리드 추가
+  장면5(approve)  가벼운 구간: 킥만 약하게, 아르페지오는 로우패스 → 끝에서 라이저로 재상승
+  장면6(brand)    풀 그루브 → CTA 순간에 마지막 코드(C add9)와 잔향 (F-G-Am-C 로 해결)
 나레이션이 나오는 동안 음악이 자동으로 살짝 내려가고, 킥마다 베이스/패드가 눌렸다 올라오는(사이드체인) 느낌을 줍니다.
 """
 import json, os, wave
@@ -26,6 +25,11 @@ D = script['duration']
 N = int(SR * D)
 BEAT = 60 / script['bpm']
 rng = np.random.default_rng(11)
+
+# 장면 구성 (script.json) 과 마무리 시각 (화면 타임라인이 기록한 'final' 효과음 큐)
+SC = script['scenes']
+DROP, CONTENT0, APPROVE, BRAND = SC['checkin'][0], SC['content'][0], SC['approve'], SC['brand'][0]
+FINAL = next(c['t'] for c in json.load(open(os.path.join(ROOT, 'audio', 'sfx_cues.json'))) if c['name'] == 'final')
 
 def tt(dur): return np.arange(int(SR * dur)) / SR
 def mtof(m): return 440.0 * 2 ** ((m - 69) / 12)
@@ -126,75 +130,78 @@ CH = {'Am': (33, [57, 60, 64, 69]), 'F': (29, [53, 57, 60, 65]), 'C': (36, [60, 
 PROG = ['Am', 'F', 'C', 'G']
 ARP = [0, 1, 2, 3, 2, 1, 2, 3, 0, 1, 2, 3, 2, 1, 3, 2]
 
-def chord_at(t): return PROG[int((t - 6.0) // 2) % 4]
+CLOSE = ['F', 'G', 'Am', 'C']                      # 마지막 4마디는 C 로 해결
+def chord_at(t):
+    if t >= FINAL - 6: return CLOSE[min(int((t - (FINAL - 6)) // 2), 3)]
+    return PROG[int((t - DROP) // 2) % 4]
 
-# 0~6초: 드론 + 시계 틱
-drone = lp(signal.sawtooth(2 * np.pi * 55 * tt(6.4)) + signal.sawtooth(2 * np.pi * 55.4 * tt(6.4)), 180)
-drone *= np.minimum(1, tt(6.4) / 1.5) * (0.5 + 0.5 * np.minimum(1, tt(6.4) / 6))
+# 장면1: 드론 + 시계 틱
+drone = lp(signal.sawtooth(2 * np.pi * 55 * tt(DROP + .4)) + signal.sawtooth(2 * np.pi * 55.4 * tt(DROP + .4)), 180)
+drone *= np.minimum(1, tt(DROP + .4) / 1.5) * (0.5 + 0.5 * np.minimum(1, tt(DROP + .4) / DROP))
 put(music, 0, drone, .13); put(wet_m, 0, drone, .04)
 k = 0
 t = 0.1
-while t < 5.9:                                    # 점점 빨라지는 틱
-    v = .08 + .14 * (t / 6) ** 1.5
+while t < DROP - .1:                              # 점점 빨라지는 틱
+    v = .08 + .14 * (t / DROP) ** 1.5
     put(music, t, bell(1900 if k % 2 else 1400, .09, 1.0, ((1, 1), (3.1, .4))) * 0.5, v, pan=-.3 if k % 2 else .3)
-    gap = BEAT * (1 - .62 * (t / 6) ** 1.3)
+    gap = BEAT * (1 - .62 * (t / DROP) ** 1.3)
     t += max(gap / 1, .09); k += 1
-for t0 in np.arange(2.0, 6.0, BEAT):              # 심장박동 서브
-    k_ = kick(.5); put(music, t0, lp(k_, 120), .3 * min(1, (t0 - 1.5) / 3))
+for t0 in np.arange(max(0, DROP - 4.0), DROP, BEAT):   # 심장박동 서브
+    k_ = kick(.5); put(music, t0, lp(k_, 120), .3 * min(1, (t0 - (DROP - 4.5)) / 3))
 
-# 6초~: 그루브
-t = 6.0
-end_groove = 43.5
-bar_steps = int(round((end_groove - 6.0) / (BEAT / 4)))
-calm = (30.0, 35.0)
+# 드롭~마무리: 그루브
+t = DROP
+end_groove = FINAL
+bar_steps = int(round((end_groove - DROP) / (BEAT / 4)))
+calm = (APPROVE[0], APPROVE[1] - 1.5)
 for s in range(bar_steps + 1):
-    ts = 6.0 + s * BEAT / 4
+    ts = DROP + s * BEAT / 4
     if ts > end_groove + 1e-6: break
     ch = CH[chord_at(ts)]
     in_calm = calm[0] <= ts < calm[1]
     step16 = s % 16; beat_pos = step16 / 4
     # 킥
     if step16 % 4 == 0 and not (in_calm and (step16 // 4) % 2 == 1):
-        kv = .62 if in_calm else (.95 if ts < 37 or ts > 43 else 1.0)
+        kv = .62 if in_calm else (.95 if ts < BRAND + .5 or ts > FINAL - .5 else 1.0)
         put(music, ts, kick(kv), .9); kick_times.append(ts)
     # 클랩 (2, 4박)
-    if step16 in (4, 12) and not in_calm and ts >= 6.0:
+    if step16 in (4, 12) and not in_calm and ts >= DROP:
         put(music, ts, clap(.9), .42, pan=.1); put(wet_m, ts, clap(.9), .14)
     # 하이햇
     if (step16 % 4 == 2) and not in_calm: put(music, ts, hat(True, .6), .15, pan=.25)
-    if ts >= 10.0 and (step16 % 2 == 0 or ts >= 20.0) and not in_calm: put(music, ts, hat(False, .5), .09, pan=-.2 if step16 % 4 == 1 else .2)
+    if ts >= DROP + 4 and (step16 % 2 == 0 or ts >= CONTENT0) and not in_calm: put(music, ts, hat(False, .5), .09, pan=-.2 if step16 % 4 == 1 else .2)
     # 베이스 (8분음표 싱코페이션)
     if step16 in (0, 3, 6, 8, 11, 14):
         bf = mtof(ch[0]); bd = BEAT * (.38 if step16 not in (0, 8) else .62)
         put(music, ts, bass(bf * (2 if step16 in (6, 14) else 1), bd), .5 * (.7 if in_calm else 1))
     # 아르페지오 플럭 (8초부터)
-    if ts >= 8.0:
-        note = ch[1][ARP[step16]] + (12 if (ts >= 20.0 and step16 % 8 == 6) else 0)
+    if ts >= DROP + 2:
+        note = ch[1][ARP[step16]] + (12 if (ts >= CONTENT0 and step16 % 8 == 6) else 0)
         accent = 1.25 if step16 % 4 == 0 else .85
         pk = pluck(mtof(note), accent, .45 if in_calm else 1.0)
         put(music, ts, pk, .17, pan=-.45 if step16 % 2 else .45); put(wet_m, ts, pk, .09)
-    # 리드 (20~30초, 37~43.5초)
-    if (20.0 <= ts < 30.0 or 37.5 <= ts < 43.5) and step16 in (0, 6, 10) and not in_calm:
+    # 리드 (콘텐츠 장면, 브랜드 장면)
+    if (CONTENT0 <= ts < APPROVE[0] or BRAND + .5 <= ts < FINAL) and step16 in (0, 6, 10) and not in_calm:
         ln = ch[1][[2, 3, 1][(0, 6, 10).index(step16)]] + 12
         ld = lead(mtof(ln), .28); put(music, ts, ld, .12, pan=.0); put(wet_m, ts, ld, .12)
 
 # 패드 (마디별)
-for bar_t in np.arange(6.0, 44.0, 2.0):
+for bar_t in np.arange(DROP, D, 2.0):
     ch = CH[chord_at(bar_t)]
     pv = .09 if bar_t < 10 else .13
     if calm[0] - 1 <= bar_t < calm[1]: pv = .2
     pd = pad([mtof(n - 12) for n in ch[1][:3]], 2.3, 1.0)
     put(music, bar_t, pd, pv); put(wet_m, bar_t, pd, pv * .8)
 
-# 35.2~37.0 라이저 (S5→S6)
+# 승인 장면 끝 → 브랜드 장면 라이저
 r = sweep_noise(1.8, 400, 9000, 1.0, shape=lambda x: x ** 2.2)
-put(risb, 35.2, r, .4)
+put(risb, BRAND - 1.8, r, .4)
 
-# 마지막: C add9 + 잔향 (43.5)
+# 마지막: C add9 + 잔향
 fin = pad([mtof(n) for n in (48, 55, 60, 64, 67, 74)], 2.3, 1.0)
-put(music, 43.5, fin, .22); put(wet_m, 43.5, fin, .3)
+put(music, FINAL, fin, .22); put(wet_m, FINAL, fin, .3)
 for i, n in enumerate((72, 76, 79, 84, 88)):
-    put(sfxb, 43.5 + i * .06, bell(mtof(n), 1.6, 1.0), .12 - i * .01, pan=-.5 + i * .25)
+    put(sfxb, FINAL + i * .06, bell(mtof(n), 1.6, 1.0), .12 - i * .01, pan=-.5 + i * .25)
 
 # ─── 효과음 큐 ───
 cues = json.load(open(os.path.join(ROOT, 'audio', 'sfx_cues.json')))
@@ -278,8 +285,8 @@ if os.path.exists(nw):
     music *= duck
     sfxb *= (0.5 + 0.5 * duck)                             # 효과음은 덜 내림
 
-# 드롭 직전(5.80~5.99초) 음악·라이저를 비워 6초 임팩트를 살립니다
-gap = np.ones(N); ga, gb = int(5.80 * SR), int(5.99 * SR)
+# 드롭 직전 0.2초 음악·라이저를 비워 드롭 임팩트를 살립니다
+gap = np.ones(N); ga, gb = int((DROP - .2) * SR), int((DROP - .01) * SR)
 gap[ga:gb] = 0; gap = signal.sosfiltfilt(signal.butter(2, 90, 'low', fs=SR, output='sos'), gap).clip(0, 1)
 music *= gap; risb *= gap; sfxb += risb
 
