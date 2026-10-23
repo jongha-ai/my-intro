@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIWORKS LAB — AI 직원의 첫 출근</title>
+<style>
+@font-face{font-family:Brand;src:url(assets/fonts/mont-800.woff2);font-weight:800}
+@font-face{font-family:Brand;src:url(assets/fonts/mont-500.woff2);font-weight:500}
+@font-face{font-family:Korean;src:url(assets/fonts/korean-bold.woff2);font-weight:800}
+@font-face{font-family:Korean;src:url(assets/fonts/korean-regular.woff2);font-weight:500}
+*{box-sizing:border-box}html,body{margin:0;background:#060b15;width:100%;height:100%;overflow:hidden}body{display:flex;justify-content:center;align-items:center}canvas{height:min(100vh,177.777vw);width:min(100vw,56.25vh);display:block}button{position:fixed;bottom:12px;right:12px;background:#d7ff65;color:#071020;border:0;padding:10px 18px;border-radius:30px;font:14px sans-serif;cursor:pointer}body.render button{display:none}
+</style></head><body><canvas width="1080" height="1920" id="film"></canvas><button id="play">재생 / 일시정지</button><audio id="audio" src="assets/mix.wav"></audio><script src="film.js"></script></body></html>

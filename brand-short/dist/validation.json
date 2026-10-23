@@ -1,0 +1,21 @@
+{
+  "file": "AIWORKS_LAB_AI_Employee_44s_1080x1920.mp4",
+  "sha256": "52f17809bc1791707e8e15b3dca3061b2f721c92fcbf1707179b912aab33ec43",
+  "duration_seconds": 44,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "decoded_video_frames": 1320,
+  "video_codec": "H.264",
+  "pixel_format": "yuv420p",
+  "audio_codec": "AAC",
+  "sample_rate": 48000,
+  "channels": 2,
+  "size_bytes": 18059146,
+  "full_decode": "passed",
+  "unexpected_black_intervals": 0,
+  "measured_integrated_loudness_LUFS": -17.06,
+  "measured_true_peak_dBTP": -2.16,
+  "measured_loudness_range_LU": 7.2,
+  "checks_scope": "Technical checks plus selected-frame visual inspection; no platform upload or human listening certification."
+}

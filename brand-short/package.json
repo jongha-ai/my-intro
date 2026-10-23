@@ -1,0 +1,11 @@
+{
+  "name": "aiworks-lab-brand-short",
+  "version": "1.0.0",
+  "private": true,
+  "description": "44-second vertical AIWORKS LAB brand film; deterministic Canvas motion graphics",
+  "scripts": {
+    "stills": "node tools/render.cjs --stills 2,6.8,12.3,18.8,23.2,29.8,34.5,40.8",
+    "render": "node tools/render.cjs"
+  },
+  "devDependencies": {"playwright": "1.57.0"}
+}

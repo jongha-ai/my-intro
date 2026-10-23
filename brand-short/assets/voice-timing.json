@@ -1,0 +1,76 @@
+[
+  {
+    "start": 0.35,
+    "end": 4.9,
+    "text": "사장님, 오늘도 홍보부터 고객 응대까지, 혼자 하고 계신가요?",
+    "caption": "오늘도 홍보부터 고객 응대까지, 혼자 하고 계신가요?",
+    "actual_duration": 4.179,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 5.2,
+    "end": 8.35,
+    "text": "이제, 에이아이 직원이 출근합니다.",
+    "caption": "이제, AI 직원이 출근합니다.",
+    "actual_duration": 1.911,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 8.8,
+    "end": 14.85,
+    "text": "사장님의 한마디를, 기획, 글쓰기, 디자인 담당 에이아이가 함께 실행합니다.",
+    "caption": "사장님의 한마디를, 기획·글쓰기·디자인 AI가 함께 실행합니다.",
+    "actual_duration": 5.585,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 15.35,
+    "end": 19.85,
+    "text": "기획에서 제작까지 이어지는, 콘텐츠 자동화.",
+    "caption": "기획에서 제작까지 이어지는 콘텐츠 자동화.",
+    "actual_duration": 2.87,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 20.35,
+    "end": 25.2,
+    "text": "하나의 아이디어가, 쇼츠와 게시물, 블로그로.",
+    "caption": "하나의 아이디어가 쇼츠와 게시물, 블로그로.",
+    "actual_duration": 2.846,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 25.85,
+    "end": 30.75,
+    "text": "에이아이가 만들고, 사장님이 확인하고 결정합니다.",
+    "caption": "AI가 만들고, 사장님이 확인하고 결정합니다.",
+    "actual_duration": 3.182,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 31.35,
+    "end": 36.15,
+    "text": "반복 업무는 줄이고, 고객과 사업에 더 집중하세요.",
+    "caption": "반복 업무는 줄이고, 고객과 사업에 더 집중하세요.",
+    "actual_duration": 3.5,
+    "tempo_adjustment": 0.94
+  },
+  {
+    "start": 36.9,
+    "end": 43.1,
+    "text": "AI Works Lab. 우리 회사의 첫 에이아이 직원, 함께 설계하세요.",
+    "parts": [
+      {
+        "text": "AI Works Lab.",
+        "lang": "en"
+      },
+      {
+        "text": "우리 회사의 첫 에이아이 직원, 함께 설계하세요.",
+        "lang": "ko"
+      }
+    ],
+    "caption": "AIWORKS LAB. 우리 회사의 첫 AI 직원, 함께 설계하세요.",
+    "actual_duration": 5.055,
+    "tempo_adjustment": 0.94
+  }
+]

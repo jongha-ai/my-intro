@@ -1,0 +1,20 @@
+[
+  {
+    "name": "@3sln/donki-lle-voice-multi",
+    "version": "0.1.1",
+    "url": "https://registry.npmjs.org/@3sln/donki-lle-voice-multi/-/donki-lle-voice-multi-0.1.1.tgz",
+    "integrity": "sha512-pe1OCsPhCti+EePT8G6L/jEqTuQV8uF7d0hOlyYHVGF3WSBbR+P7ffF3cNDEP/arF2OWlmbRFvbNAUmUGtAJBw=="
+  },
+  {
+    "name": "@3sln/donki-lle-voice-multi-2",
+    "version": "0.1.1",
+    "url": "https://registry.npmjs.org/@3sln/donki-lle-voice-multi-2/-/donki-lle-voice-multi-2-0.1.1.tgz",
+    "integrity": "sha512-bVgNjfBfSGHl45+OTYNY9eI4qWQOa1PKlnCCWWGLiK6+w8BlhRqZI62am01bQ4F4tQkPI7AZsJXilUer1ZZR6A=="
+  },
+  {
+    "name": "@3sln/donki-lle-voice-multi-3",
+    "version": "0.1.1",
+    "url": "https://registry.npmjs.org/@3sln/donki-lle-voice-multi-3/-/donki-lle-voice-multi-3-0.1.1.tgz",
+    "integrity": "sha512-nwNCbKbkSovvloXo7n649d4IbDdl76RpdC4om6PFBKKK6VtEU5w0sMSOazjmUcBQsT8QcXlJ6oyO1s//NqnvRA=="
+  }
+]

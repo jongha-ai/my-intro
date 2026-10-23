@@ -1,0 +1,43 @@
+[
+  {
+    "segment": 1,
+    "script": "사장님, 오늘도 홍보부터 고객 응대까지, 혼자 하고 계신가요?",
+    "recognized_from_final_mix": "사장님, 오늘도 홍보부터 고객 응대까지 혼자 하고 계신가요?"
+  },
+  {
+    "segment": 2,
+    "script": "이제, 에이아이 직원이 출근합니다.",
+    "recognized_from_final_mix": "이제 에이아이 직 원이 출근 합니다."
+  },
+  {
+    "segment": 3,
+    "script": "사장님의 한마디를, 기획, 글쓰기, 디자인 담당 에이아이가 함께 실행합니다.",
+    "recognized_from_final_mix": "사장 님의 한마디 를 기획, 글쓰기 디자인 담당 에이아 이가 함께 실행 합니다."
+  },
+  {
+    "segment": 4,
+    "script": "기획에서 제작까지 이어지는, 콘텐츠 자동화.",
+    "recognized_from_final_mix": "기획 에서 제작 까지 이어 지는 콘텐츠 자동화."
+  },
+  {
+    "segment": 5,
+    "script": "하나의 아이디어가, 쇼츠와 게시물, 블로그로.",
+    "recognized_from_final_mix": "하 나의 아이디 어가 쇼츠 와 게시물 블로 그로."
+  },
+  {
+    "segment": 6,
+    "script": "에이아이가 만들고, 사장님이 확인하고 결정합니다.",
+    "recognized_from_final_mix": "에이아 이가 만들 고,, 사 장님 이 확인 하고 결정 합니다."
+  },
+  {
+    "segment": 7,
+    "script": "반복 업무는 줄이고, 고객과 사업에 더 집중하세요.",
+    "recognized_from_final_mix": "반복 업무 는 줄 이고 고객 과 사업 에 더 집중 하 세요."
+  },
+  {
+    "segment": 8,
+    "script": "AI Works Lab. 우리 회사의 첫 에이아이 직원, 함께 설계하세요.",
+    "recognized_from_final_mix": " 우리리 회 사의 첫 에아이 직원 함께 설계 하 세요.",
+    "brand_english_recognizer": "AI works lab."
+  }
+]
