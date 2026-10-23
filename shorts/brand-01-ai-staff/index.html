@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>AIWORKS LAB 브랜드 쇼츠 #1 — AI 직원이 출근하면, 사장님의 일이 달라집니다.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <div id="cam">
+
+    <!-- S1 · 밀린 업무 -->
+    <section id="s1" class="scene">
+      <div class="gridbg"></div>
+      <div class="glow redglow"></div>
+      <div id="s1-top" class="abs">
+        <div class="time mono">MON 08:12</div>
+        <div class="cnt"><small>미처리 업무</small><b id="cnt-num">0</b></div>
+      </div>
+      <div id="pile"></div>
+    </section>
+
+    <!-- S2 · AI 직원 출근 -->
+    <section id="s2" class="scene">
+      <div class="bg2"></div><div class="gridbg"></div>
+      <div id="bigclock" class="abs"><span id="clk">08:59</span><small>AI STAFF · CHECK-IN</small></div>
+      <div id="s2-pill" class="abs mono"><span class="dot"></span><span>09:00 AM · CHECK-IN</span></div>
+      <div id="s2-h1" class="mask"><span>AI 직원</span></div>
+      <div id="s2-h2" class="mask"><span><u>출근.</u></span></div>
+      <div id="rows">
+        <div class="row" style="top:800px"><div class="av" style="background:#315bff" data-ic="share"></div><div class="nm"><b>매니저</b><span>MANAGER</span></div><div class="st"><i data-ic="check"></i><span>출근</span></div></div>
+        <div class="row" style="top:956px"><div class="av" style="background:#7b5cff" data-ic="search"></div><div class="nm"><b>리서처</b><span>RESEARCHER</span></div><div class="st"><i data-ic="check"></i><span>출근</span></div></div>
+        <div class="row" style="top:1112px"><div class="av" style="background:#e8a31c" data-ic="pen"></div><div class="nm"><b>콘텐츠</b><span>CONTENT</span></div><div class="st"><i data-ic="check"></i><span>출근</span></div></div>
+      </div>
+    </section>
+
+    <!-- S3 · 역할을 나눠 일하는 AI 조직 -->
+    <section id="s3" class="scene">
+      <div class="gridbg"></div><div class="glow a"></div>
+      <div id="s3-head" class="abs mono"><span>AIWORKS HQ</span><span class="live"><i></i>LIVE</span></div>
+      <svg id="links" viewBox="0 0 1080 1920">
+        <path id="p1" d="M540 688 C540 800 295 790 295 900"/>
+        <path id="p2" d="M540 688 C540 800 785 790 785 900"/>
+      </svg>
+      <div id="dots"></div>
+      <div class="node" id="n-mgr" style="left:280px;top:420px;width:520px">
+        <div class="hd"><div class="av" style="background:#315bff" data-ic="share"></div><div><b>매니저</b><span class="mono">MANAGER</span></div></div>
+        <div class="stt"><div class="bar"></div><span class="tx">대기 중</span><div class="ck" data-ic="check"></div></div>
+        <div class="ring"></div>
+      </div>
+      <div class="node" id="n-res" style="left:60px;top:900px;width:470px">
+        <div class="hd"><div class="av" style="background:#7b5cff" data-ic="search"></div><div><b>리서처</b><span class="mono">RESEARCHER</span></div></div>
+        <div class="stt"><div class="bar"></div><span class="tx">대기 중</span><div class="ck" data-ic="check"></div></div>
+        <div class="ring"></div>
+      </div>
+      <div class="node" id="n-con" style="left:550px;top:900px;width:470px">
+        <div class="hd"><div class="av" style="background:#e8a31c" data-ic="pen"></div><div><b>콘텐츠</b><span class="mono">CONTENT</span></div></div>
+        <div class="stt"><div class="bar"></div><span class="tx">대기 중</span><div class="ck" data-ic="check"></div></div>
+        <div class="ring"></div>
+      </div>
+      <div id="roles" class="abs">
+        <div class="lbl">역할을 나눠 맡고, 서로 검토합니다</div>
+        <div class="rr"><div><i data-ic="check"></i>조사</div><div><i data-ic="check"></i>기획</div><div><i data-ic="check"></i>제작</div><div><i data-ic="check"></i>실행</div><div><i data-ic="check"></i>검토</div></div>
+      </div>
+    </section>
+
+    <!-- S4 · 글 하나가 여러 콘텐츠로 -->
+    <section id="s4" class="scene">
+      <div class="gridbg"></div><div class="glow a"></div>
+      <div id="s4-head" class="abs mono"><span>CONTENT · OSMU</span><span>ONE SOURCE → MANY CHANNELS</span></div>
+      <div id="doc" class="abs"><span class="tag">BLOG · 원고</span><h4>AI 직원이 쓴<br>오늘의 원고</h4><div class="ln"></div><div class="ln m"></div><div class="ln"></div><div class="ln s"></div><div class="img"></div></div>
+      <div id="o-ig" class="out"><div class="c c3"></div><div class="c c2"></div><div class="c c1"><small>CARD NEWS</small><b>한 장으로<br>끝내는<br>핵심</b><i></i><i style="width:46%"></i></div><div class="pill"><span data-ic="insta"></span>카드뉴스</div></div>
+      <div id="o-th" class="out"><div class="who"><i></i><div><b>aiworkslab</b><span>방금 전</span></div></div><p>오늘의 한 줄,<br>AI 직원이 올렸습니다.</p><div class="ln"></div><div class="ln" style="width:52%"></div><div class="pill"><span data-ic="at"></span>스레드</div></div>
+      <div id="o-mg" class="out"><img src="assets/aiworks-wordmark-white.png" alt=""><div class="t">현장에서<br>확인한 것만<br>기록합니다</div><div class="band"></div><small>MAGAZINE</small><div class="pill"><span data-ic="book"></span>매거진</div></div>
+      <div id="o-yt" class="out"><span class="tm" id="yt-tm">0:26</span><span class="sh">SHORTS</span><div class="play" data-ic="play"></div><div class="wm"><img src="assets/aiworks-wordmark-white.png" alt=""></div><div class="prog"><i id="yt-prog"></i></div><div class="pill" style="bottom:-26px"><span data-ic="yt"></span>유튜브</div></div>
+      <div id="madewith" class="abs"><div><span data-ic="zap"></span>이 영상도 AI와 함께 제작</div></div>
+    </section>
+
+    <!-- S5 · 확인 · 승인 -->
+    <section id="s5" class="scene">
+      <div class="gridbg"></div>
+      <div id="s5-head" class="abs"><div class="l"><small>오늘의 결과</small><b>승인 대기 3</b></div><div class="r"><small>미처리</small><b id="cnt5">47</b></div></div>
+      <div class="apr" style="top:470px"><i style="background:#e8a31c" data-ic="pen"></i><div class="tx"><b>블로그 원고</b><span>AI 검토 완료 · 사진 3장</span></div><div class="badge"><i data-ic="check"></i><span>승인 대기</span></div></div>
+      <div class="apr" style="top:666px"><i style="background:#ff6a8a" data-ic="insta"></i><div class="tx"><b>인스타 카드뉴스</b><span>AI 검토 완료 · 8장</span></div><div class="badge"><i data-ic="check"></i><span>승인 대기</span></div></div>
+      <div class="apr" style="top:862px"><i style="background:#315bff" data-ic="at"></i><div class="tx"><b>스레드 게시글</b><span>AI 검토 완료 · 예약 준비</span></div><div class="badge"><i data-ic="check"></i><span>승인 대기</span></div></div>
+      <div id="apbtn" class="abs"><span data-ic="check"></span>한 번에 승인</div>
+      <div id="tapring" class="abs"></div>
+      <div id="s5-big" class="abs">
+        <div class="w"><span>결과 <u>확인</u></span></div>
+        <div class="w"><span>최종 <u>승인</u></span></div>
+        <p>나머지는 <b>AI 직원</b>이 합니다.</p>
+      </div>
+      <div id="okbig" class="abs" data-ic="check"></div>
+    </section>
+
+    <!-- S6 · 브랜드 -->
+    <section id="s6" class="scene">
+      <div class="gridbg"></div><div class="glow a"></div>
+      <div id="s6-logo" class="abs"><div class="lw"><img src="assets/aiworks-wordmark-white.png" alt="AIWorks"><div class="sweep"></div></div></div>
+      <div id="s6-lab" class="abs">LAB</div>
+      <div id="s6-tag" class="abs"><div class="a">AI를 쓰는 회사를 넘어,</div><div class="b"><u>AI가 일하는</u><br>회사로.</div></div>
+      <div id="s6-title" class="abs"><div class="t1">AI 직원이 출근하면,</div><div class="t2"><u>사장님의 일이</u><br>달라집니다.</div></div>
+      <div id="s6-cta" class="abs"><div>무료 AI 업무 진단 <span>aiworkslab.kr</span></div></div>
+    </section>
+  </div>
+
+  <div class="wipe" id="w1"><i class="er"></i><i class="el"></i></div>
+  <div id="cap"></div>
+  <div id="vig"></div>
+  <div id="grain"></div>
+  <div id="flash"></div>
+</div>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
