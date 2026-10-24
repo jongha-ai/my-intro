@@ -1,0 +1,11 @@
+{
+  "source_audio_sha256": "b7df1f5391f70b184a9889fa866b401f2747bad8bc41e677d267a24266203d68",
+  "source_duration_seconds": 30.72,
+  "output_duration_seconds": 32,
+  "speech_time_stretch": false,
+  "speech_replacement": false,
+  "speech_constant_gain_db": -3.85,
+  "output_sample_rate": 48000,
+  "music": "original procedural composition; 120 BPM pulse",
+  "sample_peak_dbfs": -4.4869893297333565
+}

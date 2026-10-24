@@ -1,0 +1,30 @@
+{
+  "file": "AIWORKS_LAB_A_Better_Workday_32s_1080x1920.mp4",
+  "sha256": "bbd6c8caa6d325ed155c926b81e8a0214daeb1881685f47c1e7669b91933509b",
+  "size_bytes": 26923620,
+  "duration_seconds": 32,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "decoded_frames": 960,
+  "video": "H.264 / yuv420p / SDR Rec.709 / limited range",
+  "audio": "AAC / 48 kHz / stereo",
+  "full_decode": "passed",
+  "unexpected_black_intervals": 0,
+  "integrated_loudness_LUFS": -16.89,
+  "true_peak_dBTP": -4.49,
+  "encoded_audio_mix_correlation": 0.9999766706890428,
+  "supplied_narration_duration_seconds": 30.72,
+  "supplied_narration_file_sha256": "b7df1f5391f70b184a9889fa866b401f2747bad8bc41e677d267a24266203d68",
+  "narration_replaced": false,
+  "narration_speed_changed": false,
+  "narration_offset_seconds": 0,
+  "image_count": 4,
+  "image_hashes": {
+    "01_overloaded_owner.jpg": "e9bbd2d5d6d91c9fd24e3b698a88959ee01d0b791c449bb3bb6019b6df66cd40",
+    "02_ai_team.jpg": "16721252de7af08997e8ed95748c7cb3aaa3b2f699732fdc2062fefd20c6d9d9",
+    "03_content_results.jpg": "140953845bfe800581a245da11fd81bdf647894be2240db7a7a9da2675b2a839",
+    "04_owner_relaxed.jpg": "34ec46b0f1342f2c0a4719d182a389af459a959fb9fcff6f72d567c2d8eb1c5c"
+  },
+  "visual_review": "Selected frames and scene transitions; no platform upload or listening certification."
+}

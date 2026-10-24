@@ -1,0 +1,20 @@
+{
+  "title": "A Better Workday / AIWORKS LAB",
+  "duration": 32,
+  "fps": 30,
+  "source_narration_duration": 30.72,
+  "narration_offset": 0,
+  "speech_time_stretch": false,
+  "shots": [
+    {"start":0,"end":3.6,"image":1,"treatment":"Full-bleed portrait, gentle camera push, opening typography below the face"},
+    {"start":3.6,"end":6.6,"image":1,"treatment":"Three independently moving photographic crop bands: face, paperwork, desk"},
+    {"start":6.6,"end":8.9,"image":1,"treatment":"Tighter crop, short oversized time-pressure statement"},
+    {"start":8.9,"end":12.3,"image":2,"treatment":"Light-leak turn, champagne/blue trajectories around the supplied holographic scene"},
+    {"start":12.3,"end":18.25,"image":2,"treatment":"Voice-synchronized verbs: delegate, research, plan, create"},
+    {"start":18.25,"end":21.95,"image":3,"treatment":"Two rising photographic crops highlighting the actual tablet and laptop in the provided image"},
+    {"start":21.95,"end":25.7,"image":4,"treatment":"Slow camera release, decision-focused typography below the owner"},
+    {"start":25.7,"end":28.7,"image":[1,4],"treatment":"Busy-to-relaxed photographic match dissolve"},
+    {"start":28.7,"end":32,"image":4,"treatment":"Image fades into charcoal/gold brand signature with retained narration and musical tail"}
+  ],
+  "note":"Editorial text highlights the narration; it is not a verbatim subtitle transcription. Supplied concept images do not represent measured client results."
+}

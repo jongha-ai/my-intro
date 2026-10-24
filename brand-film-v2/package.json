@@ -1,0 +1,11 @@
+{
+  "name": "aiworks-lab-a-better-workday",
+  "version": "1.0.0",
+  "private": true,
+  "description": "New photographic AIWORKS LAB brand film, four supplied images and supplied Korean narration",
+  "scripts": {
+    "stills": "node tools/render.cjs --stills 1.9,4.9,7.9,10.8,13.3,17.5,20.9,24.4,27.3,30.9",
+    "render": "node tools/render.cjs"
+  },
+  "devDependencies": {"playwright":"1.57.0"}
+}
